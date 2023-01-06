@@ -1,0 +1,177 @@
+// ================================> Program.cs
+
+using System;
+using static System.Console;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace fireFighter_task
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            WriteLine("Entering the fire Fighter Truck Details....");
+            ReadKey();
+            List<fireFighter> drivers = new List<fireFighter>();
+            List<fireTruck> trucks = new List<fireTruck>();
+            
+            drivers.Add(input());
+            trucks.Add(input_T());
+          for(int i=0; i<trucks.Count; i++)
+            {
+
+                if(trucks[i].waterFlowRate())
+                {
+                    Write("Truck is Ready");
+                }
+                else
+                {
+                    Write("Shap not found");
+                }
+            }
+            Read();
+        }
+
+        static fireFighter input()
+        {
+            fireFighter obj = new fireFighter();
+            Write("Driver name > ");
+            string name = ReadLine();
+            obj.setName(name);
+
+            Write("Driver Status > ");
+            string status = ReadLine();
+            obj.setStatus(status);
+
+            return obj;
+        }
+
+        static fireTruck input_T()
+        {
+
+            fireTruck obj = new fireTruck();
+
+            Write("Truck ladder Length > ");
+            int size = int.Parse(ReadLine());
+            obj.setLength(size);
+
+            Write("Ladder color > ");
+            string color = ReadLine();
+            obj.setColor(color);
+            
+            Write("Hose Pipe Shape > ");
+            string shape = ReadLine();
+            obj.sethoseShap(shape);
+
+            Write("Hose Pipe Radius > ");
+            int radius = int.Parse(ReadLine());
+            obj.setRadius(radius);
+
+            return obj;
+        }
+    }
+}
+
+
+// ================================> fireFighter.cs
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace fireFighter_task
+{
+    class fireFighter 
+    {
+        private string driverName;
+        private string driverStatus;
+
+        public string getName() { return driverName; }
+        public void setName(string driverName) { this.driverName = driverName; }
+
+        public string getStatus() { return driverStatus; }
+        public void setStatus(string driverStatus) { this.driverStatus = driverStatus; }
+    }
+}
+
+
+// ================================> fireTruck.cs
+
+using System;
+using static System.Console;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace fireFighter_task 
+{
+    class fireTruck : hosePipe
+    {
+        private int ladderLength;
+        private string ladderColor;
+
+        public int getLength() { return ladderLength; }
+        public void setLength(int ladderLength) { this.ladderLength = ladderLength; }
+
+        public string getColor() { return ladderColor; }
+        public void setColor(string ladderColor) { this.ladderColor = ladderColor; }
+    }
+}
+
+
+// ================================> hosePipe.cs
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace fireFighter_task
+{
+    class hosePipe 
+    {
+        private string hoseShap;
+        private int hoseRadius;
+        int v = 5;
+        public float Q; // water flow Rate
+
+        public string gethoseShap() { return hoseShap; }
+        public void sethoseShap(string hoseShap) { this.hoseShap = hoseShap; }
+
+        public int getRadius() { return hoseRadius; }
+        public void setRadius(int hoseRadius) { this.hoseRadius = hoseRadius; }
+
+        public bool waterFlowRate()
+        {
+            fireTruck obj = new fireTruck();
+            if(hoseShap == "circular" || hoseShap == "Circular")
+            {
+                Q = (3.14F * hoseRadius * hoseRadius) *v; // Q = Av
+                if (Q > 10)
+                {
+                    return true;
+                }
+                else
+                    return false;
+            }
+            if (hoseShap == "ractangular" || hoseShap == "Ractangular")
+            {
+                Q = (hoseRadius * 2) * obj.getLength();  // Q = Av  --> A = wh
+                if (Q > 10)
+                {
+                    return true;
+                }
+                else
+                    return false;
+            }
+            return false;
+        }
+    }
+}
